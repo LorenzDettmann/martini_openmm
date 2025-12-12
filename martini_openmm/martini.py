@@ -1185,11 +1185,11 @@ class MartiniTopFile(object):
         exclusion_exceptions = []
         for fields in molecule_type.exclusions:
             atoms = [int(x) - 1 for x in fields]
-            for atom in atoms[1:]:
-                if atom > atoms[0]:
-                    exclusion_exceptions.append(
-                        (base_atom_index + atoms[0], base_atom_index + atom, 0, 0, 0)
-                    )
+            idx1 = base_atom_index + atoms[0]
+            for neighbor_atom in atoms[1:]:
+                idx2 = base_atom_index + neighbor_atom
+                exclusion_exceptions.append((idx1, idx2, 0, 0, 0))
+
         return exclusion_exceptions
 
     def _gen_bonded_exceptions(self, molecule_type, base_atom_index):
